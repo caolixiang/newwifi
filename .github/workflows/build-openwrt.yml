@@ -55,6 +55,12 @@ jobs:
 
     - name: Clone source code
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+      
+    - name: update feeds
+      run: cd openwrt && ./scripts/feeds update -a
+
+    - name: install feeds
+      run: cd openwrt && ./scripts/feeds install -a
 
     - name: Load custom configuration
       run: |
@@ -63,12 +69,6 @@ jobs:
         chmod +x $DIY_SH
         cd openwrt
         ../$DIY_SH
-        
-    - name: update feeds
-      run: cd openwrt && ./scripts/feeds update -a
-
-    - name: install feeds
-      run: cd openwrt && ./scripts/feeds install -a
 
     - name: SSH connection to Actions
       uses: P3TERX/debugger-action@master
